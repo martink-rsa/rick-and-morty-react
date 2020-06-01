@@ -1,15 +1,37 @@
 import React, { useEffect, useState } from 'react';
-import Character from '../Character';
+// import Character from '../Character';
+import { DEFAULT_URL } from '../../config';
 
 const Characters = () => {
-  // Try to think through what state you'll need for this app before starting. Then build out
-  // the state properties here.
+  const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
-  // Fetch characters from the API in an effect hook. Remember, anytime you have a
-  // side effect in a component, you want to think about which state and/or props it should
-  // sync up with, if any.
+  async function doFetch(url) {
+    try {
+      setIsError(false);
+      setIsLoading(true);
+      const res = await fetch(url);
+      const json = await res.json();
+      setData(json.results);
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      setIsError(true);
+    }
+  }
 
-  return <div>Characters</div>;
+  useEffect(() => {
+    doFetch(DEFAULT_URL);
+  }, []);
+
+  return (
+    <div>
+      {data && data.length > 0
+        ? data.map((item) => <div>{item.name}</div>)
+        : null}
+    </div>
+  );
 };
 
 export default Characters;
