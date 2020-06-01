@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
-// import Character from '../Character';
+import './Characters.css';
+import Error from '../Error';
+import Loading from '../Loading';
+import Character from '../Character';
 import { DEFAULT_URL } from '../../config';
 
 const Characters = () => {
@@ -27,9 +30,13 @@ const Characters = () => {
 
   return (
     <div>
-      {data && data.length > 0
-        ? data.map((item) => <div>{item.name}</div>)
-        : null}
+      {isLoading ? <Loading /> : null}
+      {isError ? <Error /> : null}
+      <div className="characters-container">
+        {!isLoading && !isError && data
+          ? data.map((character) => <Character data={character} />)
+          : null}
+      </div>
     </div>
   );
 };
