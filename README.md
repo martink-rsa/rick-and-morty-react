@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/c8d7d3b2-7f0a-4dbf-8f35-8aa0056c83ca/deploy-status)](https://app.netlify.com/sites/friendly-visvesvaraya-87f45b/deploys)
+
 # rick and morty react
 
 This project you will demonstrate proficiency by creating an application that uses ReactJS to consume live data retrieved from the World Wide Web and style that data nicely on the page.
