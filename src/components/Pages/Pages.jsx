@@ -1,16 +1,23 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './Pages.css';
 import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 
-function Pages({ getPage, currentPage }) {
-  console.log(currentPage);
-
-  function getPageNumbers(index) {
+function Pages({ getPage, currentPage, maxPages }) {
+  function getPageNumbers(index, max) {
     const pageArr = [];
     const range = 5;
     let activePage = false;
     if (index < 3) {
       for (let i = 0; i < range; i += 1) {
+        activePage = false;
+        if (i === index) {
+          activePage = true;
+        }
+        pageArr.push({ value: i + 1, active: activePage });
+      }
+    } else if (index > max - 3) {
+      for (let i = max - range; i < max; i += 1) {
         activePage = false;
         if (i === index) {
           activePage = true;
@@ -31,7 +38,6 @@ function Pages({ getPage, currentPage }) {
         pageArr.push({ value: i + 1, active: activePage });
       }
     }
-    console.log(pageArr);
     return pageArr;
   }
 
@@ -44,7 +50,7 @@ function Pages({ getPage, currentPage }) {
           </PaginationItem>
         ) : (
           <PaginationItem>
-            <PaginationLink first onClick={() => getPage('start')} />
+            <PaginationLink first onClick={() => getPage('first')} />
           </PaginationItem>
         )}
         {currentPage === 1 ? (
@@ -56,26 +62,46 @@ function Pages({ getPage, currentPage }) {
             <PaginationLink previous onClick={() => getPage('prev')} />
           </PaginationItem>
         )}
-        {getPageNumbers(currentPage - 1).map((pageItem) => {
+        {getPageNumbers(currentPage - 1, maxPages).map((pageItem) => {
           return pageItem.active ? (
-            <PaginationItem active>
-              <PaginationLink href="#">{pageItem.value}</PaginationLink>
+            <PaginationItem key={`pagination-page-${pageItem.value}`} active>
+              <PaginationLink>{pageItem.value}</PaginationLink>
             </PaginationItem>
           ) : (
-            <PaginationItem>
-              <PaginationLink href="#">{pageItem.value}</PaginationLink>
+            <PaginationItem key={`pagination-page-${pageItem.value}`}>
+              <PaginationLink onClick={() => getPage(pageItem.value)}>
+                {pageItem.value}
+              </PaginationLink>
             </PaginationItem>
           );
         })}
-        <PaginationItem>
-          <PaginationLink next onClick={() => getPage('next')} />
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink last onClick={() => getPage('end')} />
-        </PaginationItem>
+        {currentPage === 30 ? (
+          <PaginationItem disabled>
+            <PaginationLink next />
+          </PaginationItem>
+        ) : (
+          <PaginationItem>
+            <PaginationLink next onClick={() => getPage('next')} />
+          </PaginationItem>
+        )}
+        {currentPage === 30 ? (
+          <PaginationItem disabled>
+            <PaginationLink last />
+          </PaginationItem>
+        ) : (
+          <PaginationItem>
+            <PaginationLink last onClick={() => getPage('last')} />
+          </PaginationItem>
+        )}
       </Pagination>
     </div>
   );
 }
+
+Pages.propTypes = {
+  getPage: PropTypes.func.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  maxPages: PropTypes.number.isRequired,
+};
 
 export default Pages;

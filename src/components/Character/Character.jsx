@@ -92,6 +92,7 @@ Character.propTypes = {
     status: PropTypes.string,
     image: PropTypes.string,
     gender: PropTypes.string,
+    url: PropTypes.string,
   }).isRequired,
 };
 
