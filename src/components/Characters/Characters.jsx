@@ -34,7 +34,10 @@ const Characters = () => {
       {isError ? <Error /> : null}
       <div className="characters-container">
         {!isLoading && !isError && data
-          ? data.map((character) => <Character data={character} />)
+          ? data.map((character) => (
+              // eslint-disable-next-line react/jsx-indent
+              <Character key={character.name} data={character} />
+            ))
           : null}
       </div>
     </div>
