@@ -5,7 +5,7 @@ import { Card, CardImg, CardBody, CardTitle, Table } from 'reactstrap';
 import IconELink from '../../images/external-link.svg';
 
 const Character = ({ data }) => {
-  // eslint-disable-next-line object-curly-newline
+  console.log(data);
   const { name, origin, species, location, status, image, gender, url } = data;
   return (
     <div>
