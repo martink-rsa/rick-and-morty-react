@@ -86,7 +86,7 @@ const Characters = () => {
 
       <div className="characters-container">
         {!isLoading && !isError && data
-          ? data.results.map((character) => (
+          ? filterResults(searchQuery, data.results).map((character) => (
               // eslint-disable-next-line react/jsx-indent
               <Character
                 key={`character-${character.id}-${character.name}`}
