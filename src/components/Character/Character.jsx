@@ -1,29 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './Character.css';
-import { Card, CardImg, CardBody, CardTitle, Table } from 'reactstrap';
+import { Card, Table } from 'react-bootstrap';
 import IconELink from '../../images/external-link.svg';
 
 const Character = ({ data }) => {
-  console.log(data);
   const { name, origin, species, location, status, image, gender, url } = data;
   return (
     <div>
       <Card>
-        <CardImg
+        <Card.Img
           top
           src={image}
           alt={name}
           className="rounded-circle card-img"
         />
-        <CardBody>
-          <CardTitle>
+        <Card.Body>
+          <Card.Title>
             <a href={url}>{name}</a>
             <a href={url} target="_blank" rel="noopener noreferrer">
               <img src={IconELink} alt={name} className="icon" />
             </a>
-          </CardTitle>
-          <Table borderless>
+          </Card.Title>
+          <Table>
             <tbody>
               <tr>
                 <th scope="row">Status:</th>
@@ -71,7 +70,7 @@ const Character = ({ data }) => {
               </tr>
             </tbody>
           </Table>
-        </CardBody>
+        </Card.Body>
       </Card>
     </div>
   );

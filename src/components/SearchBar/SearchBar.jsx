@@ -1,14 +1,17 @@
 import React from 'react';
 import propTypes from 'prop-types';
 import './SearchBar.css';
-import { Form, FormGroup, Input } from 'reactstrap';
+import { Form } from 'react-bootstrap';
 
 function SearchBar({ searchQuery, setSearchQuery }) {
+  function onSubmit(e) {
+    e.preventDefault();
+  }
   return (
     <div className="form-container">
-      <Form>
-        <FormGroup>
-          <Input
+      <Form onSubmit={(e) => onSubmit(e)}>
+        <Form.Group>
+          <Form.Control
             type="text"
             name="search"
             id="search"
@@ -16,8 +19,7 @@ function SearchBar({ searchQuery, setSearchQuery }) {
             placeholder="Search"
             onChange={(event) => setSearchQuery(event.currentTarget.value)}
           />
-        </FormGroup>
-        {/* <Button>Submit</Button> */}
+        </Form.Group>
       </Form>
     </div>
   );
