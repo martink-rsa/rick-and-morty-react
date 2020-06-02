@@ -6,12 +6,14 @@ import Character from '../Character';
 import Pages from '../Pages';
 import { getUrl } from '../../utils/utils';
 import { DEFAULT_URL } from '../../config';
+import SearchBar from '../SearchBar/SearchBar';
 
 const Characters = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   async function doFetch(url) {
     try {
@@ -28,9 +30,7 @@ const Characters = () => {
   }
 
   function getPage(dir) {
-    // const maxPage = data.info.pages;
-    const maxPage = 30;
-    console.log(maxPage);
+    const maxPage = data.info.pages;
     switch (dir) {
       case 'next':
         setCurrentPage((prevState) => prevState + 1);
@@ -53,6 +53,7 @@ const Characters = () => {
           setCurrentPage(dir);
           doFetch(getUrl(dir));
         } else {
+          // eslint-disable-next-line no-console
           console.log('Error handling pagination');
         }
     }
@@ -62,11 +63,16 @@ const Characters = () => {
     doFetch(DEFAULT_URL);
   }, []);
 
-  console.log(data);
+  const filterResults = (query, dataIn) =>
+    dataIn.filter((item) =>
+      item.name.toLowerCase().includes(query.toLowerCase()),
+    );
+
   return (
     <div>
       {isLoading ? <Loading /> : null}
       {isError ? <Error /> : null}
+      <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       {data ? (
         <Pages
           next={data.info.next}
@@ -78,7 +84,7 @@ const Characters = () => {
 
       <div className="characters-container">
         {!isLoading && !isError && data
-          ? data.results.map((character) => (
+          ? filterResults(searchQuery, data.results).map((character) => (
               // eslint-disable-next-line react/jsx-indent
               <Character
                 key={`character-${character.id}-${character.name}`}

@@ -41,6 +41,8 @@ function Pages({ getPage, currentPage, maxPages }) {
     return pageArr;
   }
 
+  /* Multiple conditional renders about to take place according to
+        where the pagination index is */
   return (
     <div className="pages-container">
       <Pagination aria-label="Pagination">
