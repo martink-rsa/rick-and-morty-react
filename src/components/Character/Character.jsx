@@ -7,13 +7,11 @@ import IconELink from '../../images/external-link.svg';
 const Character = ({ data }) => {
   // eslint-disable-next-line object-curly-newline
   const { name, origin, species, location, status, image, gender, url } = data;
-  console.log(data);
   return (
     <div>
       <Card>
         <CardImg
           top
-          center
           src={image}
           alt={name}
           className="rounded-circle card-img"
