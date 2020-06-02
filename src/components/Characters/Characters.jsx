@@ -72,7 +72,9 @@ const Characters = () => {
     <div>
       {isLoading ? <Loading /> : null}
       {isError ? <Error /> : null}
-      <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      {data ? (
+        <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      ) : null}
       {data ? (
         <Pages
           next={data.info.next}
@@ -84,7 +86,7 @@ const Characters = () => {
 
       <div className="characters-container">
         {!isLoading && !isError && data
-          ? filterResults(searchQuery, data.results).map((character) => (
+          ? data.results.map((character) => (
               // eslint-disable-next-line react/jsx-indent
               <Character
                 key={`character-${character.id}-${character.name}`}
